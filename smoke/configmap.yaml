@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repo-smoke-config
+  labels:
+    app.kubernetes.io/name: repo-smoke
+    app.kubernetes.io/part-of: repo-smoke
+data:
+  message: "ArgoCD repo connectivity OK"
+  notes: |
+    Temporary smoke test manifest.
+    Safe to delete after validation.
