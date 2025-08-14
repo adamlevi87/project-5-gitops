@@ -64,6 +64,14 @@ externalSecrets:
   remoteKey: project-5-dev-frontend-envs
   #targetSecretName: frontend-env
 
+secretStore:
+  enabled: true
+  name: "aws-secretsmanager"
+  service: "SecretsManager"
+  region: "us-east-1"
+  serviceAccountName: "frontend-sa"
+  syncWave: "-1"
+
 # envSecrets:
 #   # Frontend connects to backend via the ALB
 #   REACT_APP_BACKEND_URL: "https://backend-app.project-5.projects-devops.cfd"
