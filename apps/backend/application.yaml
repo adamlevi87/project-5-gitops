@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: project-5
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: backend
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  # Multi-source: CHART comes from app repo; VALUES come from gitops repo via ref
+  sources:
+    - repoURL: https://github.com/adamlevi87/project-5-app.git    # chart source
+      targetRevision: main
+      path: local/helm/base-app/generic/
+      helm:
+        releaseName: backend
+        valueFiles:
+          - $values/manifests/backend-values.yaml                # <-- use the ref below
+    - repoURL: https://github.com/adamlevi87/project-5-gitops.git     # values source
+      targetRevision: main
+      ref: values

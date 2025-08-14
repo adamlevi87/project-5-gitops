@@ -1,0 +1,71 @@
+# aws/values/backend.aws.yaml
+# Backend deployment values for AWS EKS
+
+image:
+  repository: "593793036161.dkr.ecr.us-east-1.amazonaws.com/project-5-dev-backend"
+  digest: "sha256:7d89d3b98a69040d3911740f3dab6f0d598e017dab6a89a92e881357841d6720"
+  tag: ""
+  pullPolicy: Always
+
+namespace: backend
+
+service:
+  type: "ClusterIP"
+  port: 80
+
+serviceAccount:
+  create: false
+  name: backend-sa
+
+containerPort: 3000
+
+ingress:
+  enabled: true
+  host: "backend-app.project-5.projects-devops.cfd"
+  ingressControllerClassResourceName: "alb"
+  ingressPath: "/submit"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
+    alb.ingress.kubernetes.io/target-type: "ip"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/group.name: "project-5-dev-alb-shared-group"
+    alb.ingress.kubernetes.io/security-groups: "sg-03e138f9f14f37145,sg-0f325939a4148dfc0,sg-01b56d2f1aa53cfc4"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:593793036161:certificate/93219da1-66a4-40a1-aba7-36c0d3345e35"
+    # External DNS annotation (optional - helps external-dns identify the record)
+    external-dns.alpha.kubernetes.io/hostname: "backend-app.project-5.projects-devops.cfd"
+
+replicaCount: 1
+
+# HPA Configuration
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 70
+
+# Resource requests/limits for HPA to work
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+# External Secrets  
+externalSecrets:
+  enabled: true
+  externalSecretName: backend-app-secrets
+  secretStoreRef:
+    name: aws-secretsmanager
+    kind: SecretStore
+  remoteKey: project-5-dev-backend-envs
+
+secretStore:
+  enabled: true
+  name: "aws-secretsmanager"
+  service: "SecretsManager"
+  region: "us-east-1"
+  serviceAccountName: "backend-sa"
+  syncWave: "-1"
