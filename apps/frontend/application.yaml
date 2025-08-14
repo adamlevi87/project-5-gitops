@@ -22,6 +22,7 @@ spec:
       targetRevision: main
       path: local/helm/base-app/generic/
       helm:
+        releaseName: frontend
         valueFiles:
           - $values/manifests/frontend-values.yaml                # <-- use the ref below
     - repoURL: https://github.com/adamlevi87/project5-gitops      # values source
