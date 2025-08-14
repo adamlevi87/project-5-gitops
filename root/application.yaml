@@ -3,20 +3,21 @@ kind: Application
 metadata:
   name: app-of-apps
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
 spec:
   project: project-5
   source:
     repoURL: https://github.com/adamlevi87/project5-gitops
     path: apps
     targetRevision: main
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: default
   revisionHistory: 3
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
     retry:
       limit: 5
       backoff:

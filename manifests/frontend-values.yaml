@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/frontend
+  tag: latest
+
+externalSecret:
+  enabled: true
+  secretStoreRef:
+    name: aws-secretsmanager
+  remoteSecretName: frontend-dev-env   # AWS SM secret created by Terraform
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  hosts:
+    - host: frontend.example.com
+      paths:
+        - path: /
+          pathType: Prefix
