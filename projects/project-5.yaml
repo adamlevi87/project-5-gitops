@@ -27,7 +27,9 @@ spec:
     - group: apps
       kind: Deployment
     - group: "argoproj.io"
-      kind: "Application" 
+      kind: "Application"
+    - group: "autoscaling"
+      kind: "HorizontalPodAutoscaler"
   clusterResourceWhitelist: []
   orphanedResources:
     warn: true
