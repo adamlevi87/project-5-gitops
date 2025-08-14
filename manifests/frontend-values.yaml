@@ -1,23 +1,69 @@
-replicaCount: 1
+# aws/values/frontend.aws.yaml
+# Frontend deployment values for AWS EKS
 
 image:
-  repository: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/frontend
-  tag: latest
+  repository: "593793036161.dkr.ecr.us-east-1.amazonaws.com/project-5-dev-frontend"
+  digest: "sha256:84783d64c351cf966a7f87eef83793d512a628103676b3d609c5a5c4ad3fcc66"
+  tag: ""
+  pullPolicy: Always
 
-externalSecret:
-  enabled: true
-  secretStoreRef:
-    name: aws-secretsmanager
-  remoteSecretName: frontend-dev-env   # AWS SM secret created by Terraform
+namespace: frontend
 
 service:
-  type: ClusterIP
+  type: "ClusterIP"
   port: 80
+
+serviceAccount:
+  create: false
+  name: frontend-sa
+
+containerPort: 80
 
 ingress:
   enabled: true
-  hosts:
-    - host: frontend.example.com
-      paths:
-        - path: /
-          pathType: Prefix
+  host: "frontend-app.project-5.projects-devops.cfd"
+  ingressControllerClassResourceName: "alb"
+  ingressPath: "/"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
+    alb.ingress.kubernetes.io/target-type: "ip"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/group.name: "project-5-dev-alb-shared-group"
+    alb.ingress.kubernetes.io/security-groups: "sg-03e138f9f14f37145,sg-0f325939a4148dfc0,sg-01b56d2f1aa53cfc4"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:593793036161:certificate/93219da1-66a4-40a1-aba7-36c0d3345e35"
+    # External DNS annotation (optional - helps external-dns identify the record)
+    external-dns.alpha.kubernetes.io/hostname: "frontend-app.project-5.projects-devops.cfd"
+
+replicaCount: 1
+
+# HPA Configuration
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 70
+  # targetMemoryUtilizationPercentage: 80  # Optional
+
+# Resource requests/limits for HPA to work
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# External Secrets  
+externalSecrets:
+  enabled: true
+  externalSecretName: frontend-app-secrets
+  secretStoreRef:
+    name: aws-secretsmanager
+    kind: SecretStore
+  remoteKey: project-5-dev-frontend-envs
+  #targetSecretName: frontend-env
+
+# envSecrets:
+#   # Frontend connects to backend via the ALB
+#   REACT_APP_BACKEND_URL: "https://backend-app.project-5.projects-devops.cfd"
