@@ -8,7 +8,7 @@ metadata:
 spec:
   project: project-5
   source:
-    repoURL: https://github.com/adamlevi87/project5-gitops
+    repoURL: https://github.com/adamlevi87/project-5-gitops.git
     path: apps
     targetRevision: main
     directory:

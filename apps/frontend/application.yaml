@@ -25,6 +25,6 @@ spec:
         releaseName: frontend
         valueFiles:
           - $values/manifests/frontend-values.yaml                # <-- use the ref below
-    - repoURL: https://github.com/adamlevi87/project5-gitops      # values source
+    - repoURL: https://github.com/adamlevi87/project-5-gitops.git     # values source
       targetRevision: main
       ref: values
