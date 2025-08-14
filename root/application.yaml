@@ -16,7 +16,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
-  revisionHistory: 3
+  revisionHistoryLimit: 3
   syncPolicy:
     retry:
       limit: 5
