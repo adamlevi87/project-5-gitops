@@ -24,7 +24,8 @@ spec:
       helm:
         releaseName: frontend
         valueFiles:
-          - $values/manifests/frontend-values.yaml                # <-- use the ref below
+          - $values/manifests/frontend/infra-values.yaml          # <-- infrastructure values (Terraform)
+          - $values/manifests/frontend/app-values.yaml            # <-- application values (static)
     - repoURL: https://github.com/adamlevi87/project-5-gitops.git     # values source
       targetRevision: main
       ref: values
