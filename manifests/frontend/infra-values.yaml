@@ -42,7 +42,7 @@ externalSecrets:
   secretStoreRef:
     name: aws-secretsmanager
     kind: SecretStore
-  remoteKey: frontend-envs
+  remoteKey: "project-5-dev-frontend-envs"
   #targetSecretName: frontend-env
 
 secretStore:
