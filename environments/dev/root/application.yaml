@@ -1,9 +1,10 @@
 # This is a duplicate of the real App-of-Apps which is Helm managed on a terraform apply
 # under the argocd Module
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps
+  name: project-5-app-of-apps-dev
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
