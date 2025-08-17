@@ -2,7 +2,7 @@
 # digest is managed by the application repo workflow (build-and-push action or update-digest-only)
 image:
   repository: "593793036161.dkr.ecr.us-east-1.amazonaws.com/project-5-dev-frontend"
-  digest: "sha256:84783d64c351cf966a7f87eef83793d512a628103676b3d609c5a5c4ad3fcc6"
+  digest: "sha256:84783d64c351cf966a7f87eef83793d512a628103676b3d609c5a5c4ad3fcc66"
   tag: ""
   pullPolicy: Always
 
