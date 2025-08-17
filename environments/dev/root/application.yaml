@@ -11,7 +11,7 @@ spec:
   project: project-5
   source:
     repoURL: https://github.com/adamlevi87/project-5-gitops.git
-    path: apps
+    path: environments/dev/apps
     targetRevision: main
     directory:
       recurse: true

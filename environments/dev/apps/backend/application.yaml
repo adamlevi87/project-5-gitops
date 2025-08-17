@@ -24,8 +24,8 @@ spec:
       helm:
         releaseName: backend
         valueFiles:
-          - $values/manifests/backend/infra-values.yaml          # <-- infrastructure values (Terraform)
-          - $values/manifests/backend/app-values.yaml            # <-- application values (static)
+          - $values/environments/dev/manifests/backend/infra-values.yaml          # <-- infrastructure values (Terraform)
+          - $values/environments/dev/manifests/backend/app-values.yaml            # <-- application values (static)
     - repoURL: https://github.com/adamlevi87/project-5-gitops.git     # values source
       targetRevision: main
       ref: values
