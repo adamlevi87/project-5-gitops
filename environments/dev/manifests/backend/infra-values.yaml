@@ -3,7 +3,7 @@
 
 image:
   repository: "864546685796.dkr.ecr.us-east-1.amazonaws.com/project-5-dev-backend"
-  digest: "sha256:87c891660ff62506674a79f74273a7e885c3b796886ce2e5e7ad891d20cff6c8"
+  digest: "sha256:YOUR_SHA"
   tag: ""
   pullPolicy: Always
 
@@ -33,7 +33,7 @@ ingress:
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/group.name: "project-5-dev-alb-shared-group"
     #SG list order argo,frontend,backend
-    alb.ingress.kubernetes.io/security-groups: "sg-04ddcb512f044d5b5,sg-00debef09f8f2caf1,sg-0660ed56d277e9809"
+    alb.ingress.kubernetes.io/security-groups: "sg-0f185625df76871cc,sg-0b3a9791f0f550959,sg-0e1732f628cc8fc8d"
     alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:864546685796:certificate/de5834b9-59e1-4a02-8184-54e7c028cab6"
     # External DNS annotation (optional - helps external-dns identify the record)
     external-dns.alpha.kubernetes.io/hostname: "backend-app.project-5.projects-devops.cfd"
